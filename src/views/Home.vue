@@ -117,8 +117,8 @@
           <div class="bio-main">
               <img alt="" src="@/assets/img/bio-main.jpg"/>
               <div class="about-text">
-				          <h2>Alejandro H Tadino M</h2>
-				          <p>
+                <h2>Alejandro H Tadino M</h2>
+                <p>
                     Hola, mi nombre es alejandro, soy un desarrollador y diseñador de aplicaciones web con mas de 10 años de experiencia en el campo de IT.
                     <br />
                     <br />
@@ -126,41 +126,71 @@
                     <br />
                     <br />
                     Para mi, cada proyecto es una alianza de la que podemos aprender nuevas estrategias para alcanzar las metas trazadas.
-                  </p>
+                </p>
               </div>
           </div>
 			</section>
 			<section id="contact">
-				<h2>contactos</h2>
-        <div class="contact-sns">
-            <h3>Redes</h3>
-            twitter
-            github
-            gitlab
-            linkedin
-            facebook
-            instagram
-        </div>
-        <div class="contact-form">
-            <label for="full-name">Full Name</label>
-            <input type="text" name="name" id="full-name" placeholder="Nombre" required="true">
-            <label for="email-address">Correo</label>
-            <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="true">
-            <label for="message">Mensaje</label>
-            <textarea rows="5" name="message" id="message" placeholder="" required=""></textarea>
-            <input type="hidden" name="_subject" id="email-subject" value="Contacto desde alejandrohtadinom.com">
-            <input type="button" value="Submit">
-            </div>
+          <div class="contact-wrapper">
+              <div class="contact-sns">
+                  <h3>Redes</h3>
+                  <a href="https://twitter.com/Al2xcsz"><i class="fab fa-twitter"></i> twitter</a>
+                  <a href="https://linkedin.com/in/alejandrohtadinom"><i class="fab fa-linkedin"></i> linkedin</a>
+                  <a href="#"><i class="fab fa-facebook-square"></i> facebook</a>
+                  <a href="#"><i class="fab fa-instagram"></i> instagram</a>
+                  <a href="https://gitlab.com/alejandrohtadinom"><i class="fab fa-gitlab"></i> Gitlab</a>
+                  <a href="https://github.com/alejandrohtadinom"><i class="fab fa-github"></i> github</a>
+              </div>
+              <div class="contact-form">
+                  <form @submit="sendForm">
+                      <label for="full-name">Full Name</label>
+                      <input type="text" name="name" id="full-name" placeholder="Nombre" required="true" v-model="name">
+                      <label for="email-address">Correo</label>
+                      <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="true" v-model="email">
+                      <label for="message">Mensaje</label>
+                      <textarea rows="5" name="message" id="message" placeholder="Mensaje" required="true" v-model="message"></textarea>
+                      <input type="submit" value="Submit">
+                  </form>
+              </div>
+          </div>
 			</section>
 		</main>
 	</div>
 </template>
 
 <script>
+ import axios from 'axios'
 
 export default {
 	name: 'home',
-	components: {
-	}
+     data() {
+         return {
+            message: '',
+            email: '',
+            name: '',
+         }
+     },
+     methods: {
+         sendForm: function(e) {
+             e.preventDefault()
+             axios.post('https://formspree.io/alejandrohtadinom@gmail.com', {
+                 data: {
+                    _replyto: this.email,
+                    message: this.message,
+                    name: this.name,
+                    _subject: "Contacto desde alejandrohtadinom.com"
+                 }
+             })
+                  .then( (res) => {
+                      console.log(res)
+                      this.email = ''
+                      this.message = ''
+                      this.name = ''
+                  })
+              .catch((err) => {
+                  console.log(err)
+              })
+         }
+     }
 }
 </script>
