@@ -25,7 +25,7 @@
 		color: $primary-white;
 		display: flex;
 		justify-content: center;
-		box-shadow: 0 0 6rem rgba(16, 14, 23, 0.70);
+		box-shadow: 0 0 6rem $shadow;
 
 		&:before {
 			content: '';
@@ -56,7 +56,7 @@
 		justify-content: center;
 		flex-direction: column;
 		color: $primary-white;
-		box-shadow: 0 0 6rem rgba(16, 14, 23, 0.70);
+		box-shadow: 0 0 6rem $shadow;
 
 		.tag-line {
 			font-weight: 300;
@@ -70,42 +70,59 @@
 			.cta {
 				margin: 1rem;
 				padding: 1rem 1.5rem;
-				background-color: #fff;
+				background-color: $primary-white;
 				border-radius: .6rem;
 	
 				&:last-child {
-					color: $primary-white;
-					background: linear-gradient(-35deg, $primary-blue, $primary-blue-light);
+				  background-color: $primary-white;
 				}
 			}
 		}
 	}
 
-	.header-rect-small {
-		position: absolute;
-		width: 10%;
-		height: 10%;
-		background-color: pink;
-		filter: blur(5px);
-	}
+  .rect-small-container {
+      display: block;
+      min-height: 100vh;
+      position: relative;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
 
-	.header-rect-small-1 {
-		top: 25%;
-		left: 50%;
-	}
+	    .header-rect-small {
+		      position: absolute;
+		      width: 64px;
+		      height: 64px;
 
-	.header-rect-small-2 {
-		top: 10%;
-		right: 20%;
-	}
+          &:nth-child(even){
+		          background: linear-gradient(45deg, $primary-red, $primary-orange);
+          }
 
-	.header-rect-small-3 {
-		top: 50%;
-		left: 20%;
-	}
+          &:nth-child(odd){
+		          background: linear-gradient(45deg, $primary-blue, $primary-blue-light) ;
+          }
+	    }
 
-	.header-rect-small-4 {
-		top: 5%;
-		left: 10%;
-	}
+	    .header-rect-small-1 {
+		      top: 25%;
+		      left: 50%;
+	    }
+
+	    .header-rect-small-2 {
+		      top: 10%;
+		      right: 20%;
+	    }
+
+	    .header-rect-small-3 {
+		      top: 50%;
+		      left: 20%;
+	    }
+
+	    .header-rect-small-4 {
+		      top: 5%;
+		      left: 10%;
+	    }
+  }
+
 }
