@@ -138,8 +138,6 @@
                         <h3>Redes</h3>
                         <a href="https://twitter.com/Al2xcsz"><i class="fab fa-twitter"></i> twitter</a>
                         <a href="https://linkedin.com/in/alejandrohtadinom"><i class="fab fa-linkedin"></i> linkedin</a>
-                        <a href="#"><i class="fab fa-facebook-square"></i> facebook</a>
-                        <a href="#"><i class="fab fa-instagram"></i> instagram</a>
                         <a href="https://gitlab.com/alejandrohtadinom"><i class="fab fa-gitlab"></i> Gitlab</a>
                         <a href="https://github.com/alejandrohtadinom"><i class="fab fa-github"></i> github</a>
                     </div>
@@ -162,7 +160,7 @@
 
 <script>
  import axios from 'axios'
-import $ from 'jquery'
+//import $ from 'jquery'
 
  export default {
      name: 'home',
@@ -178,14 +176,13 @@ import $ from 'jquery'
              e.preventDefault()
              axios.post('https://formspree.io/alejandrohtadinom@gmail.com', {
                  data: {
-                     _replyto: this.email,
-                     message: this.message,
-                     name: this.name,
-                     _subject: "Contacto desde alejandrohtadinom.com"
+                     "replyto": this.email,
+                     "message": this.message,
+                     "name": this.name,
+                     "subject": "Contacto desde alejandrohtadinom.com"
                  }
              })
-              .then( (res) => {
-                  console.log(res)
+              .then( () => {
                   this.email = ''
                   this.message = ''
                   this.name = ''
@@ -196,13 +193,14 @@ import $ from 'jquery'
          },
 
          scrollControll() {
-             var sectionProducts = $('.products').offset.top
-
-             $(document).on('scroll', () => {
-                 var scrollTop = window.scrollY
-
-                 if (scrollTop <  sectionProducts) {
-                     $('.rect-small-container').css('top', (scrollTop  * .7) + 'px')
+             let rectContainer = document.getElementsByClassName('rect-small-container')[0]
+             let headerRect = document.getElementsByClassName('header-rect')[0]
+             let serviceRect = (document.getElementById('services').getBoundingClientRect().top + window.pageYOffset)
+             window.addEventListener('scroll', () => {
+                 if (serviceRect > (window.scrollY)) {
+                     console.log(window.scrollY)
+                     headerRect.style.top = `${window.scrollY / 4.6}px`
+                     rectContainer.style.top = `${window.scrollY / 2}px`
                  }
              })
          }

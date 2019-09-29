@@ -6,12 +6,13 @@
 		background: url('~@/assets/img/header-bg.jpg');
 		background-position: center;
 		background-size: cover;
-		position: fixed;
+		position: absolute;
 		z-index: -2;
 		width: 60%;
 		height: 60%;
 		top: 4%;
 		left: 30%;
+    transition: top .1s linear;
 	}
 	
 	.header-title {
@@ -89,6 +90,7 @@
       bottom: 0;
       right: 0;
       z-index: -1;
+      transition: top .1s linear;
 
 	    .header-rect-small {
 		      position: absolute;
