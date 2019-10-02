@@ -3,10 +3,7 @@
         <header class="header-container">
             <div class="header-rect"></div>
             <div class="rect-small-container">
-                <div class="header-rect-small header-rect-small-1"></div>
-                <div class="header-rect-small header-rect-small-2"></div>
-                <div class="header-rect-small header-rect-small-3"></div>
-                <div class="header-rect-small header-rect-small-4"></div>
+                <div v-for="(i, index) in 4" :key="index" class="header-rect-small" :class="'header-rect-small-' + i"></div>
             </div>
             <div class="header-sub">
                 <h3 class="tag-line">Programmer // Developer // Thinker</h3>
@@ -82,38 +79,8 @@
             </section>
             <section id="about">
                 <div class="bio-img">
-                    <div class="about-img about-img about-img-1">
-                        <img alt="" src="@/assets/img/bio-1.jpg"/>
-                    </div>
-                    <div class="about-img about-img-2">
-                        <img alt="" src="@/assets/img/bio-2.jpg"/>
-                    </div>
-                    <div class="about-img about-img-3">
-                        <img alt="" src="@/assets/img/bio-3.jpg"/>
-                    </div>
-                    <div class="about-img about-img-4">
-                        <img alt="" src="@/assets/img/bio-4.jpg"/>
-                    </div>
-                    <div class="about-img about-img-5">
-                        <img alt="" src="@/assets/img/bio-5.jpg"/>
-                    </div>
-                    <div class="about-img about-img-6">
-                        <img alt="" src="@/assets/img/bio-6.jpg"/>
-                    </div>
-                    <div class="about-img about-img-7">
-                        <img alt="" src="@/assets/img/bio-7.jpg"/>
-                    </div>
-                    <div class="about-img about-img-8">
-                        <img alt="" src="@/assets/img/bio-8.jpg"/>
-                    </div>
-                    <div class="about-img about-img-9">
-                        <img alt="" src="@/assets/img/bio-9.jpg"/>
-                    </div>
-                    <div class="about-img about-img-10">
-                        <img alt="" src="@/assets/img/bio-10.jpg"/>
-                    </div>
-                    <div class="about-img about-img-11">
-                        <img alt="" src="@/assets/img/bio-11.jpg"/>
+                    <div v-for="(n, index) in profile_pics" :key="index" class="about-img about-img" :class="'about-img-' + n">
+                        <img alt="" :src="require(`@/assets/img/bio-${n}.jpg`)"/>
                     </div>
                 </div>
                 <div class="bio-main">
@@ -136,19 +103,16 @@
                 <div class="contact-wrapper">
                     <div class="contact-sns">
                         <h3>Redes</h3>
-                        <a href="https://twitter.com/Al2xcsz"><i class="fab fa-twitter"></i> twitter</a>
-                        <a href="https://linkedin.com/in/alejandrohtadinom"><i class="fab fa-linkedin"></i> linkedin</a>
-                        <a href="https://gitlab.com/alejandrohtadinom"><i class="fab fa-gitlab"></i> Gitlab</a>
-                        <a href="https://github.com/alejandrohtadinom"><i class="fab fa-github"></i> github</a>
+                        <a v-for="l in contact_links" :href="l.url"><i class="fab" :class="l.icon"></i> {{ l.name }}</a>
                     </div>
                     <div class="contact-form">
                         <form @submit="sendForm">
                             <label for="full-name">Nombre</label>
-                            <input type="text" name="name" id="full-name" placeholder="Nombre" required="true" v-model="name">
+                            <input type="text" name="name" id="full-name" placeholder="Nombre" required="true" v-model="contact.name">
                             <label for="email-address">Correo</label>
-                            <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="true" v-model="email">
+                            <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="true" v-model="contact.email">
                             <label for="message">Mensaje</label>
-                            <textarea rows="5" name="message" id="message" placeholder="Mensaje" required="true" v-model="message"></textarea>
+                            <textarea rows="5" name="message" id="message" placeholder="Mensaje" required="true" v-model="contact.message"></textarea>
                             <input type="submit" value="Submit">
                         </form>
                     </div>
@@ -166,9 +130,34 @@
      name: 'home',
      data() {
          return {
-             message: '',
-             email: '',
-             name: '',
+             contact: {
+                message: '',
+                email: '',
+                name: ''
+             },
+             contact_links: [
+                 {
+                     name: 'twitter',
+                     url: 'https://twitter.com/Al2xcsz',
+                     icon: 'fa-twitter'
+                 },
+                 {
+                     name: 'linkedin',
+                     url: 'https://linkedin.com/in/alejandrohtadinom',
+                     icon: 'fa-linkedin'
+                 },
+                 {
+                     name: 'gitlab',
+                     url: 'https://gitlab.com/alejandrohtadinom',
+                     icon: 'fa-gitlab'
+                 },
+                 {
+                     name: 'github',
+                     url: 'https://github.com/alejandrohtadinom',
+                     icon: 'fa-github'
+                 }
+             ],
+            profile_pics: 11
          }
      },
      methods: {
@@ -176,9 +165,9 @@
              e.preventDefault()
              axios.post('https://formspree.io/alejandrohtadinom@gmail.com', {
                  data: {
-                     "replyto": this.email,
-                     "message": this.message,
-                     "name": this.name,
+                     "replyto": this.contact.email,
+                     "message": this.contact.message,
+                     "name": this.contact.name,
                      "subject": "Contacto desde alejandrohtadinom.com"
                  }
              })
@@ -198,7 +187,6 @@
              let serviceRect = (document.getElementById('services').getBoundingClientRect().top + window.pageYOffset)
              window.addEventListener('scroll', () => {
                  if (serviceRect > (window.scrollY)) {
-                     console.log(window.scrollY)
                      headerRect.style.top = `${window.scrollY / 4.6}px`
                      rectContainer.style.top = `${window.scrollY / 2}px`
                  }
@@ -206,8 +194,10 @@
          }
      },
 
-     mounted () {
-         this.scrollControll()
+     created () {
+         this.$nextTick(() => {
+            this.scrollControll()
+         })
      }
  }
 </script>
